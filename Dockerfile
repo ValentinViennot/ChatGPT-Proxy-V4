@@ -23,6 +23,10 @@ COPY --from=builder /app/app /app
 
 # Expose the port that the app listens on
 EXPOSE 8080
+# ChatGPT access token, get from https://chat.openai.com/api/auth/session
+ENV ACCESS_TOKEN=your-secret-access-token
+# ChatGPT Plus Personal User ID, get from Webchat Cookies
+ENV PUID=your-personal-chatgptplus-puid
 
 # Run the app when the container starts
 CMD ["/app"]
