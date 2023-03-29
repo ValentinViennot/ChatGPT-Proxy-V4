@@ -1,8 +1,8 @@
 package main
 
 import (
-	"io"
 	"os"
+	"io"
 	"time"
 
 	http "github.com/bogdanfinn/fhttp"
@@ -108,6 +108,8 @@ func proxy(c *gin.Context) {
 
 	url = "https://chat.openai.com/backend-api" + c.Param("path")
 	request_method = c.Request.Method
+	// url = "http://192.168.65.2:8888/events"
+	// request_method = http.MethodGet
 
 	request, err = http.NewRequest(request_method, url, c.Request.Body)
 	if err != nil {
@@ -147,10 +149,16 @@ func proxy(c *gin.Context) {
 	c.Header("Content-Type", response.Header.Get("Content-Type"))
 	// Get status code
 	c.Status(response.StatusCode)
-	c.Stream(func(w io.Writer) bool {
-		// Write data to client
-		io.Copy(w, response.Body)
-		return false
-	})
+	c.Writer.Flush()
+	
+	for {
+		buf := make([]byte, 32*1024)
+		response.Body.Read(buf)
+		if buf[0] == 0 {
+			return
+		}
+		c.Writer.Write(buf)
+		c.Writer.Flush()
+	}
 
 }
