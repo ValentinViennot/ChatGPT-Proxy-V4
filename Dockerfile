@@ -14,10 +14,10 @@ RUN go mod download
 # Copy the source code to the container
 COPY . .
 
-# Build the Go app
-RUN go build -o app .
+# Build the Go app (statically compiled)
+RUN CGO_ENABLED=0 go build -o app .
 
-FROM gcr.io/distroless/base
+FROM gcr.io/distroless/static
 
 COPY --from=builder /app/app /app
 
