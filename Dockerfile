@@ -22,7 +22,7 @@ FROM gcr.io/distroless/static
 COPY --from=builder /app/app /app
 
 # Expose the port that the app listens on
-EXPOSE 8080
+EXPOSE 9090
 
 # OpenAI credentials
 ENV OPENAI_EMAIL=user@example.com
