@@ -201,7 +201,7 @@ func proxy(c *gin.Context) {
 	request.Header.Set("Connection", "keep-alive")
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Keep-Alive", "timeout=360")
-	request.Header.Set("Authorization", c.Request.Header.Get("Authorization"))
+	request.Header.Set("Authorization", os.Getenv("ACCESS_TOKEN"))
 	request.Header.Set("sec-ch-ua", "\"Chromium\";v=\"112\", \"Brave\";v=\"112\", \"Not:A-Brand\";v=\"99\"")
 	request.Header.Set("sec-ch-ua-mobile", "?0")
 	request.Header.Set("sec-ch-ua-platform", "\"Linux\"")

@@ -1,9 +1,13 @@
 version: '3.3'
+
 services:
-    chatgpt-proxy:
-        image: chatgpt-proxy-v4
-        container_name: chatgpt-proxy-v4
-        ports:
-            - '9090:9090'
-        env_file:
-            - .env
+  chatgpt-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '9090:9090'
+    environment:
+      - OPENAI_EMAIL=${OPENAI_EMAIL}
+      - OPENAI_PASSWORD=${OPENAI_PASSWORD}
+      - ACCESS_TOKEN=${ACCESS_TOKEN}
